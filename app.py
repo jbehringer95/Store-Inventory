@@ -65,6 +65,7 @@ def menu_loop():
 
 
 def view_entry():
+    """View Entry """
     clear()
     while True:   
         user_id = input('Please enter the product ID \n')
@@ -90,17 +91,53 @@ def view_entry():
         try_agian = input('Would you like to search for another item y/n? \n').lower()
         if try_agian == 'n':
             break
+        
     
 
 
 def add_entry():
+    """Add an Entry"""
     new_name = input('Please tell us the name of the new item.\n')
-    new_price = input('What is the price of the item.\n')
-    new_quantity = int(input('How many items are there.\n'))
+    while True:
+        new_quantity = input('How many items are there.\n')
+        try:
+            new_quantity = int(new_quantity)
+            break
+        except ValueError:
+            print('Sorry please enter a number')
+
+    while True:
+        new_price = input('What is the price of the item.\n')
+        try:
+            new_price = float(new_price)
+            new_price = int(new_price * 100)
+            break
+        except ValueError:
+            print('Sorry please enter a number')
+    try:
+        Product.create(
+                    product_name = new_name,
+                    product_quantity = new_quantity,
+                    product_price = new_price,
+                    date_updated = datetime.datetime.now()
+                ).save()
+    except IntegrityError:
+        temp = Product.get(product_name=new_name)
+        temp.product_quantity = new_quantity
+        temp.product_price = new_price
+        temp.date_updated = datetime.datetime.now()
+        temp.save()
+        
+
+        
+
+
+
     
 
 
 def backup_data():
+    """Backup Data"""
     pass
     
 
