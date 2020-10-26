@@ -130,12 +130,6 @@ def add_entry():
         
 
         
-
-
-
-    
-
-
 def backup_data():
     """Backup Data"""
     pass
