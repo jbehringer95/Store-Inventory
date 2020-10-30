@@ -7,7 +7,7 @@ import csv
 from peewee import *
 
 db = SqliteDatabase('inventory.db')
-new_inventory = []
+
 
 class Product(Model):
     #content
@@ -50,7 +50,6 @@ def menu_loop():
     user_input = None
     user_inputs = ['q', 'v', 'a', 'b']
     while user_input != 'q':
-        clear()
         print("Justin's store inventory\n\n")
         print('Please choose one of the 3 options or put q to exit')
         for key, value in menu.items():
@@ -132,7 +131,36 @@ def add_entry():
         
 def backup_data():
     """Backup Data"""
-    pass
+    clear()
+    file_backup = 'inventory_backup.csv'
+    field_names = [
+        'product_name',
+        'product_price',
+        'product_quantity',
+        'date_updated',
+    ]
+
+    with open(file_backup, 'w', newline = '') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=field_names)
+        writer.writeheader()
+        products = Product.select()
+        for product in products:
+            writer.writerow({
+                'product_name': product.product_name,
+                'product_quantity': product.product_quantity,
+                'product_price': product.product_price,
+                'date_updated': product.date_updated
+            })
+    
+    if os.path.isfile(file_backup):
+        clear()
+        print('Your shop has been backed up')
+    
+    else:
+        clear()
+        print('It seems something went wrong... Try again.')
+
+
     
 
 def clear():
