@@ -161,10 +161,8 @@ def backup_data():
         print('It seems something went wrong... Try again.')
 
 
-    
-
-def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    def clear():
+        os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def initialize():
