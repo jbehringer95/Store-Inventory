@@ -66,10 +66,10 @@ def menu_loop():
 def view_entry():
     """View Entry """
     clear()
-    while True:   
-        user_id = input('Please enter the product ID \n')
+    while True:
+        user_id = None   
         try:
-            user_id = int(user_id)
+            user_id = int(input('Please enter the product ID \n'))
         except ValueError:
             clear()
             print('That is not a valid option. Please try agian.\n')
